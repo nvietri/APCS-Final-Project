@@ -27,7 +27,7 @@ public class Board extends JPanel implements ActionListener
 
 	//Starting locations for the meteors
 	private final int[][] pos = {
-		{2380, 29}, {2500, 59}, {1380, 89},
+		{700, 350}, {2500, 59}, {1380, 89},
 		{780, 109}, {580, 139}, {680, 239},
 		{790, 259}, {760, 50}, {790, 150},
 		{980, 209}, {560, 45}, {510, 70},
@@ -52,7 +52,7 @@ public class Board extends JPanel implements ActionListener
 
 		setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-		cat = new NyanCat(ICAT_X, ICAT,Y);
+		cat = new NyanCat(ICAT_X, ICAT_Y);
 
 		initMeteors();
 
@@ -60,7 +60,7 @@ public class Board extends JPanel implements ActionListener
 		timer.start();
 	}
 
-	public void initAliens()
+	public void initMeteors()
 	{
 		meteors = new ArrayList<>();
 
@@ -89,9 +89,9 @@ public class Board extends JPanel implements ActionListener
 
 	private void drawObjects(Graphics g)
 	{
-		if(cat.isVisisble())
+		if(cat.isVisible())
 		{
-			g.drawImage(cat.getImage(), cat.get(), cat.getY(),this);
+			g.drawImage(cat.getImage(), cat.getX(), cat.getY(),this);
 		}
 
 		ArrayList<Laser> las = cat.getLasers();
@@ -112,6 +112,138 @@ public class Board extends JPanel implements ActionListener
 			}
 		}
 		g.setColor(Color.WHITE);
-		//LEFT OF HERE
+		g.drawString("Meteors left: " + meteors.size(), 5, 15);
+	}
+
+	private void drawGameOver(Graphics g)
+	{
+		String message = "GAME OVER";
+		Font small = new Font("Helvetica", Font.BOLD, 14);
+		FontMetrics fm = getFontMetrics(small);
+
+		g.setColor(Color.WHITE);
+		g.setFont(small);
+		g.drawString(message,(B_WIDTH - fm.stringWidth(message))/2,B_HEIGHT / 2);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		inGame();
+
+		updateCat();
+		updateLasers();
+		updateMeteors();
+
+		checkCollisions();
+
+		repaint();
+	}
+
+	private void inGame()
+	{
+		if(!ingame)
+		{
+			timer.stop();
+		}
+	}
+
+	private void updateCat()
+	{
+		if(cat.isVisible())
+		{
+			cat.move();
+		}
+	}
+
+	private void updateLasers()
+	{
+		ArrayList<Laser> ls = cat.getLasers();
+
+		for(int i = 0; i < ls.size();i++)
+		{
+			Laser l = ls.get(i);
+
+			if(l.isVisible())
+			{
+				l.move();
+			}
+			else
+			{
+				ls.remove(i);
+			}
+		}
+	}
+
+	private void updateMeteors()
+	{
+		if(meteors.isEmpty())
+		{
+			ingame = false;
+			return;
+		}
+
+		for(int i = 0; i < meteors.size(); i++)
+		{
+			Meteor m = meteors.get(i);
+			if(m.isVisible())
+			{
+				m.move();
+			}
+			else
+			{
+				meteors.remove(i);
+			}
+		}
+	}
+
+	public void checkCollisions()
+	{
+		Rectangle rCat = cat.getBounds();
+
+		for (Meteor m : meteors)
+		{
+			Rectangle rMeteor = m.getBounds();
+
+			if (rCat.intersects(rMeteor))
+			{
+				cat.setVisible(false);
+				m.setVisible(false);
+				ingame = false;
+			}
+		}
+
+		ArrayList<Laser> ls = cat.getLasers();
+
+		for(Laser l : ls)
+		{
+			Rectangle rLaser = l.getBounds();
+
+			for(Meteor m : meteors)
+			{
+				Rectangle rMeteor = m.getBounds();
+
+				if (rLaser.intersects(rMeteor))
+				{
+					l.setVisible(false);
+					m.setVisible(false);
+				}
+			}
+		}
+	}//CHECK COLLISIONS
+
+	private class TAdapter extends KeyAdapter
+	{
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+			cat.keyReleased(e);
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e)
+		{
+			cat.keyPressed(e);
+		}
 	}
 }

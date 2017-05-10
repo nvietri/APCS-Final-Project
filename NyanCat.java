@@ -60,12 +60,16 @@ public class NyanCat extends Sprite//implements KeyListener
 
 		if (key == KeyEvent.VK_UP)
 		{
-			changeY = 1;//Up arrow
+			changeY = -1;//Up arrow
 		}
 
 		if (key == KeyEvent.VK_DOWN)
 		{
 			changeY = 1;
+		}
+		if (key == KeyEvent.VK_SPACE)
+		{
+			fire();
 		}
 	}
 
