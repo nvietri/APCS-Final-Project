@@ -18,6 +18,7 @@ public class Board extends JPanel implements ActionListener
 	private Timer timer;
 	private NyanCat cat;
 	private ArrayList<Meteor> meteors;
+	private ArrayList<Star> stars;
 	private boolean ingame;
 	private final int ICAT_X = 40;
 	private final int ICAT_Y = 60;
@@ -70,6 +71,17 @@ public class Board extends JPanel implements ActionListener
 		}
 	}
 
+	public void initStars()
+	{
+		stars = new ArrayList<>();
+
+		for(int i = 0; i < 7; i++){
+			stars.add(new Star(1296,(int)(Math.random() * 734 + 1)));
+		}
+	}
+
+
+
 	@Override
 	public void paintComponent(Graphics g)
 	{
@@ -109,6 +121,13 @@ public class Board extends JPanel implements ActionListener
 			if(m.isVisible())
 			{
 				g.drawImage(m.getImage(),m.getX(),m.getY(),this);
+			}
+		}
+		for(Star s : stars)
+		{
+			if(s.isVisible())
+			{
+				g.drawImage(s.getImage(),s.getX(),s.getY(),this);
 			}
 		}
 		g.setColor(Color.WHITE);
@@ -211,6 +230,16 @@ public class Board extends JPanel implements ActionListener
 				cat.setVisible(false);
 				m.setVisible(false);
 				ingame = false;
+			}
+		}
+
+		for(Star s : stars)
+		{
+			Rectangle rStar = s.getBounds();
+			if(rCat.intersects(rStar))
+			{
+				s.setVisible(false);
+				cat.ammoPickup(5);
 			}
 		}
 
