@@ -10,7 +10,7 @@ public class Meteor extends Sprite
 
 	private void initMeteor()
 	{
-		loadImage("images\\Meteor.png");
+		loadImage("images\\asteriod.png");
 		getImageDimensions();
 	}
 

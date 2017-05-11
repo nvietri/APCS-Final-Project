@@ -7,12 +7,14 @@ public class NyanCat extends Sprite//implements KeyListener
 {
 	private int changeX, changeY;//Changes position when key is pressed
 	private ArrayList<Laser> lasers;
+	private int ammo;
 
 
 	public NyanCat(int x, int y)
 	{
 		super(x,y);
 		initCat();//Assigns image and starting coordinates
+		ammo = 20; //Ammo for missles
 	}
 
 	private void initCat()
@@ -40,7 +42,16 @@ public class NyanCat extends Sprite//implements KeyListener
 
 	public void fire()
 	{
-		lasers.add(new Laser(x + width, y - height - 35));
+		if(ammo > 0)
+		{
+			lasers.add(new Laser(x + width, y + 35));
+			ammo -= 1;//Subtracts a shot every laser fired
+		}
+	}
+
+	public int getAmmo()
+	{
+		return ammo;
 	}
 
 	//This listens for the player to press a key, assigned to arrow keys

@@ -113,6 +113,7 @@ public class Board extends JPanel implements ActionListener
 		}
 		g.setColor(Color.WHITE);
 		g.drawString("Meteors left: " + meteors.size(), 5, 15);
+		g.drawString("Ammo: " + cat.getAmmo(), 5, 30);
 	}
 
 	private void drawGameOver(Graphics g)

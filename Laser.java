@@ -11,7 +11,7 @@ public class Laser extends Sprite
 
 	private void initLaser()
 	{
-		loadImage("images\\laser.png");
+		loadImage("images\\Laser2.png");
 		getImageDimensions();
 	}
 
