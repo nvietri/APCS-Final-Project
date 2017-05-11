@@ -47,7 +47,7 @@ public class Board extends JPanel implements ActionListener
 	{
 		addKeyListener(new TAdapter());
 		setFocusable(true);
-		setBackground(Color.BLACK);
+		setBackground(new Color(1,68,121));
 		ingame = true;
 
 		setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));

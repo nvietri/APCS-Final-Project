@@ -40,7 +40,7 @@ public class NyanCat extends Sprite//implements KeyListener
 
 	public void fire()
 	{
-		lasers.add(new Laser(x + width, y + height /2));
+		lasers.add(new Laser(x + width, y - height - 35));
 	}
 
 	//This listens for the player to press a key, assigned to arrow keys
