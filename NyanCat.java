@@ -54,6 +54,11 @@ public class NyanCat extends Sprite//implements KeyListener
 		return ammo;
 	}
 
+	public void ammoPickup(int ammoGain)
+	{
+		ammo += ammoGain;
+	}
+
 	//This listens for the player to press a key, assigned to arrow keys
 	public void keyPressed(KeyEvent e)
 	{
