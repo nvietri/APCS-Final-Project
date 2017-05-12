@@ -1,16 +1,16 @@
-public class Star extends Sprite{
+public class Ammo extends Sprite{
 
 	private final int INITIAL_X = 1296;
 	private final int INITIAL_Y = 734;
 
-	public Star(int x, int y){
+	public Ammo(int x, int y){
 
 		super(x,y);
-		initStar();
+		initAmmo();
 	}
-	private void initStar(){
+	private void initAmmo(){
 
-		loadImage("images\\star.png");
+		loadImage("images\\ammo.jpg");
 		getImageDimensions();
 		setVisible(true);
 	}

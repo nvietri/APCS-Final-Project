@@ -12,13 +12,14 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.lang.*;
 
 public class Board extends JPanel implements ActionListener
 {
 	private Timer timer;
 	private NyanCat cat;
 	private ArrayList<Meteor> meteors;
-	private ArrayList<Star> stars;
+	private ArrayList<Ammo> ammo;
 	private boolean ingame;
 	private final int ICAT_X = 40;
 	private final int ICAT_Y = 60;
@@ -56,6 +57,7 @@ public class Board extends JPanel implements ActionListener
 		cat = new NyanCat(ICAT_X, ICAT_Y);
 
 		initMeteors();
+		initAmmo();
 
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -71,13 +73,12 @@ public class Board extends JPanel implements ActionListener
 		}
 	}
 
-	public void initStars()
+	public void initAmmo()
 	{
-		stars = new ArrayList<>();
+		ammo = new ArrayList<>();
 
-		for(int i = 0; i < 7; i++){
-			stars.add(new Star(1296,(int)(Math.random() * 734 + 1)));
-		}
+		ammo.add(new Ammo(25,500));
+
 	}
 
 
@@ -123,11 +124,11 @@ public class Board extends JPanel implements ActionListener
 				g.drawImage(m.getImage(),m.getX(),m.getY(),this);
 			}
 		}
-		for(Star s : stars)
+		for(Ammo a : ammo)
 		{
-			if(s.isVisible())
+			if(a.isVisible())
 			{
-				g.drawImage(s.getImage(),s.getX(),s.getY(),this);
+				g.drawImage(a.getImage(),a.getX(),a.getY(),this);
 			}
 		}
 		g.setColor(Color.WHITE);
@@ -219,6 +220,7 @@ public class Board extends JPanel implements ActionListener
 
 	public void checkCollisions()
 	{
+		int count = 0;
 		Rectangle rCat = cat.getBounds();
 
 		for (Meteor m : meteors)
@@ -233,15 +235,18 @@ public class Board extends JPanel implements ActionListener
 			}
 		}
 
-		for(Star s : stars)
+		for(Ammo a : ammo)
 		{
-			Rectangle rStar = s.getBounds();
-			if(rCat.intersects(rStar))
+			Rectangle rAmmo = a.getBounds();
+			if(rCat.intersects(rAmmo))
 			{
-				s.setVisible(false);
-				cat.ammoPickup(5);
+				//s.setVisible(false);
+				///stars.remove(s);
+				cat.ammoPickup(1);
+				Thread.sleep(1000);
 			}
 		}
+
 
 		ArrayList<Laser> ls = cat.getLasers();
 
