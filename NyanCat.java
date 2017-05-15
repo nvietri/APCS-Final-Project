@@ -66,22 +66,22 @@ public class NyanCat extends Sprite//implements KeyListener
 
 		if (key == KeyEvent.VK_LEFT)
 		{
-			changeX = -1; //If the arrow key is left
+			changeX = -2; //If the arrow key is left
 		}
 
 		if (key == KeyEvent.VK_RIGHT)
 		{
-			changeX = 1;//Right arrow key
+			changeX = 2;//Right arrow key
 		}
 
 		if (key == KeyEvent.VK_UP)
 		{
-			changeY = -1;//Up arrow
+			changeY = -2;//Up arrow
 		}
 
 		if (key == KeyEvent.VK_DOWN)
 		{
-			changeY = 1;
+			changeY = 2;
 		}
 		if (key == KeyEvent.VK_SPACE)
 		{

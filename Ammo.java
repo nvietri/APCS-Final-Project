@@ -10,7 +10,7 @@ public class Ammo extends Sprite{
 	}
 	private void initAmmo(){
 
-		loadImage("images\\ammo.jpg");
+		loadImage("images\\ammo.png");
 		getImageDimensions();
 		setVisible(true);
 	}
